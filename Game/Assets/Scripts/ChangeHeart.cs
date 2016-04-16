@@ -11,7 +11,7 @@ public class ChangeHeart : MonoBehaviour {
     public static Image MissLove, MayorMaine;
     public static int optionNum = 0; // for optionbuttons
     public static int next = 0; // increase this for each click, set to zero, when changing character
-    [SerializeField] public static Text character; // serialization doesnt work
+    public static string saveName;
 
     void Start() {
         uiSpeech = GameObject.Find("Text_speech").GetComponent<Text>();
@@ -29,7 +29,6 @@ public class ChangeHeart : MonoBehaviour {
         groupNameObj = GameObject.Find("InputFieldName");
         MissLove = GameObject.Find("ImageMissLove").GetComponent<Image>();
         MayorMaine = GameObject.Find("ImageMayorMaine").GetComponent<Image>();
-        character = GameObject.Find("TextChar").GetComponent<Text>();
 
         if (!Map.doneHeart) {
             ChangeText();
@@ -41,12 +40,12 @@ public class ChangeHeart : MonoBehaviour {
             optionBox4.SetActive(false);
             nextButton.SetActive(false);
             groupNameObj.SetActive(false);
-            uiSpeech.text = "Hey " + character.text + ", the Heart is in a good condition. Travel to the other organs who really need you.";
+            uiSpeech.text = "Hey " + saveName + ", the Heart is in a good condition. Travel to the other organs who really need you.";
         }
     }
 
     public void CharacterField(string iFieldString) {
-        character.text = iFieldString;
+        saveName = iFieldString;
     }
 
     // Using variable to differentiate between 4 option buttons
@@ -95,7 +94,7 @@ public class ChangeHeart : MonoBehaviour {
                 optionBox2.SetActive(true);
                 optionBox3.SetActive(true);
                 MayorMaine.enabled = true;
-                uiSpeech.text = "Mayor Maine: Greetings "+ character.text +". I need your help, all of you. The health of our world is in a terrible condition.";
+                uiSpeech.text = "Mayor Maine: Greetings "+ saveName +". I need your help, all of you. The health of our world is in a terrible condition.";
                 break;
             case 4:
             case 5:
