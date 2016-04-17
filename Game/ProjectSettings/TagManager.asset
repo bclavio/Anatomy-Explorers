@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Collider1
+  - Collider2
+  - Collider3
+  - Pool
+  - Mouse
   layers:
   - Default
   - TransparentFX
