@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class RadialSlider: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
 {
 	bool isPointerDown=false;
-
+    bool confirm = false;
 	// Called when the pointer enters our GUI component.
 	// Start tracking the mouse
 	public void OnPointerEnter( PointerEventData eventData )
@@ -41,15 +41,17 @@ public class RadialSlider: MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 		var input = FindObjectOfType<StandaloneInputModule>();
 
 		var text = GetComponentInChildren<Text>();
-		
+                		
 		if( ray != null && input != null )
 		{
 			while( Application.isPlaying )
-			{                    
+			{
 
-				// TODO: if mousebutton down
-				if (isPointerDown)
+                // TODO: if mousebutton down
+               
+                if (isPointerDown && confirm == false)
 				{
+                    
 
 					Vector2 localPos; // Mouse position  
 					RectTransformUtility.ScreenPointToLocalPointInRectangle( transform as RectTransform, Input.mousePosition, ray.eventCamera, out localPos );
@@ -59,12 +61,19 @@ public class RadialSlider: MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
 					GetComponent<Image>().fillAmount = angle;
 
-					GetComponent<Image>().color = Color.Lerp(Color.green, Color.red, angle);
+					GetComponent<Image>().color = Color.Lerp(Color.red, Color.green, angle);
 
-					text.text = ((int)(angle*360f)).ToString();
+					 //text.text = ((int)(angle*360f)).ToString();
 
-					//Debug.Log(localPos+" : "+angle);	
-				}
+                    if (GetComponent<Image>().fillAmount >= .95f)   
+                    {
+                        text.text = "Confirm";
+                        confirm = true;
+                        Debug.Log("true");
+                    }
+
+                    //Debug.Log(localPos+" : "+angle);	
+                }
 
 				yield return 0;
 			}        
