@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class WindowSystem : MonoBehaviour {
 
 
+<<<<<<< HEAD
     public static int firstvalueOx = 0;
     public static int secondvalueOx = 0;
     public static int firstvalueSol = 0;
@@ -179,5 +180,68 @@ public class WindowSystem : MonoBehaviour {
         if (tempPro < 0)
             tempPro = 0;
         GameObject.Find("AmountPro").GetComponent<Text>().text = tempPro.ToString();
+=======
+     int firstvalue = 0;
+     int secondvalue = 0;
+
+    public int total;
+    int temp;
+
+    void Start()
+    {
+        GameObject.Find("Amount").GetComponent<Text>().text = total.ToString();
+    }
+
+	public void FirstUp()
+    {
+        if(firstvalue >= 0 && firstvalue <= 9)
+            firstvalue += 1;
+        if(firstvalue > 9)
+            firstvalue = 0;
+        GameObject.Find("FirstNumber").GetComponent<Text>().text = firstvalue.ToString();
+        temp = total - (firstvalue * 10 + secondvalue);
+        if (temp < 0)
+            temp = 0;
+        GameObject.Find("Amount").GetComponent<Text>().text = temp.ToString();
+    }
+
+    public void FirstDown()
+    {
+        if(firstvalue >= 0 && firstvalue <= 9)
+            firstvalue -= 1;
+        if(firstvalue < 0)
+            firstvalue = 9;
+        GameObject.Find("FirstNumber").GetComponent<Text>().text = firstvalue.ToString();
+        temp = total - (firstvalue * 10 + secondvalue);
+        if (temp < 0)
+            temp = 0;
+        GameObject.Find("Amount").GetComponent<Text>().text = temp.ToString();
+    }
+
+    public void SecondUp()
+    {
+        if(secondvalue >= 0 && secondvalue <= 9)
+            secondvalue += 1;
+        if (secondvalue > 9)
+            secondvalue = 0;
+        GameObject.Find("SecondNumber").GetComponent<Text>().text = secondvalue.ToString();
+        temp = total - (firstvalue * 10 + secondvalue);
+        if (temp < 0)
+            temp = 0;
+        GameObject.Find("Amount").GetComponent<Text>().text = temp.ToString();
+    }
+
+    public void SecondDown()
+    {
+        if(secondvalue >= 0 && secondvalue <= 9)
+            secondvalue -= 1;
+        if (secondvalue < 0)
+            secondvalue = 9;
+        GameObject.Find("SecondNumber").GetComponent<Text>().text = secondvalue.ToString();
+        temp = total - (firstvalue * 10 + secondvalue);
+        if (temp < 0)
+            temp = 0;
+        GameObject.Find("Amount").GetComponent<Text>().text = temp.ToString();
+>>>>>>> Bianca
     }
 }
