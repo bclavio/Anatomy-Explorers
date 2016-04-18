@@ -4,4 +4,22 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Start.unity
+  - enabled: 1
+    path: Assets/Scenes/Heart.unity
+  - enabled: 1
+    path: Assets/Scenes/Liver.unity
+  - enabled: 1
+    path: Assets/Scenes/Stomach.unity
+  - enabled: 1
+    path: Assets/Scenes/Kidney.unity
+  - enabled: 1
+    path: Assets/Scenes/Travel.unity
+  - enabled: 1
+    path: Assets/Scenes/Map.unity
+  - enabled: 1
+    path: Assets/Scenes/ViralVilly.unity
+  - enabled: 1
+    path: Assets/Scenes/ViralVDead.unity

@@ -19,8 +19,7 @@ public class Map : MonoBehaviour {
    void Update() {
         if (doneHeart && doneStomach && doneLiver && doneKidney) { 
             viralButton.SetActive(true);
-            uiSpeech.text = "Viral Villy: Muhahahaha, I have taken the heart and soon I'll take it all!";
-            
+            uiSpeech.text = "IMPORTANT MESSEGE! Viral Villy is an infectious virus, and he's on his way to the Heart! You need to stop that bacteria before he arrives at the heart, otherwise the he will infect the entire body through the heart's blood pumping system. Will you do this?";
         }
         else if (doneHeart) {
             // new visualization?
@@ -34,6 +33,10 @@ public class Map : MonoBehaviour {
         else if (doneKidney) {
             // new visualization?
         }
+    }
+
+    public void changeImage() {
+
     }
 
     // need bool for in the arriving to the expected organ + function in map
