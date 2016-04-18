@@ -6,9 +6,9 @@ public class Negotiation : MonoBehaviour {
 
     private Vector3 mousePosition;
     private Vector3 mouseOffset;
-    public static Transform targetPool;
+    public static Transform targetPool, outScreen;
     public static float moveSpeed = 1.0f;
-    public static bool select1, select2, select3, send;
+    public static bool select1, select2, select3, send, collision;
     public static GameObject leel, oxPos, soPos, prPos, pool1, pool2, pool3, colResource1, colResource2, colResource3, mouse;
 
     void Start () {
@@ -21,7 +21,7 @@ public class Negotiation : MonoBehaviour {
         pool3 = GameObject.Find("CylinderCollider (3)");
 
         targetPool = GameObject.Find("CylinderCollider (3)").GetComponent<Transform>();
-
+        outScreen = GameObject.Find("OuterScreen").GetComponent<Transform>(); 
         colResource1 = GameObject.Find("CylinderRmouse");
         colResource2 = GameObject.Find("CylinderWmouse");
         colResource3 = GameObject.Find("CylinderYmouse");
@@ -34,43 +34,58 @@ public class Negotiation : MonoBehaviour {
     void Update() {
 
         if (Input.GetMouseButton(0)) { // mouse down
-            mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mouse.transform.position = Vector2.Lerp(transform.position, mousePosition, moveSpeed);
-            if (Input.GetMouseButton(0) && select1) {
-                colResource1.transform.position = Vector2.Lerp(transform.position, mousePosition, moveSpeed);
-                colResource1.SetActive(true);
-                colResource2.SetActive(false);
-                colResource3.SetActive(false);
-            }
-            else if (Input.GetMouseButton(0) && select2) {
-                colResource2.transform.position = Vector2.Lerp(transform.position, mousePosition, moveSpeed);
-                colResource2.SetActive(true);
-                colResource1.SetActive(false);
-                colResource3.SetActive(false);
+            if (collision)
+            {
+                mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                mouse.transform.position = Vector2.Lerp(transform.position, mousePosition, moveSpeed);
+                if (Input.GetMouseButton(0) && ChooseWindow.getsWindowNumber == 1 && ChooseWindow.drag)
+                {
+                    colResource1.transform.position = Vector2.Lerp(transform.position, mousePosition, moveSpeed);
+                }
+                else if (Input.GetMouseButton(0) && ChooseWindow.getsWindowNumber == 2 && ChooseWindow.drag)
+                {
+                    colResource2.transform.position = Vector2.Lerp(transform.position, mousePosition, moveSpeed);
 
-            }
-            else if (Input.GetMouseButton(0) && select3) {
-                colResource3.transform.position = Vector2.Lerp(transform.position, mousePosition, moveSpeed);
-                colResource3.SetActive(true);
-                colResource1.SetActive(false);
-                colResource2.SetActive(false);
-
+                }
+                else if (Input.GetMouseButton(0) && ChooseWindow.getsWindowNumber == 3 && ChooseWindow.drag)
+                {
+                    colResource3.transform.position = Vector2.Lerp(transform.position, mousePosition, moveSpeed);
+                }
             }
         }
         if (Input.GetMouseButtonUp(0)) {
-            if (select1 && !send || select2 && !send || select3 && !send) {
-                colResource1.SetActive(false);
-                colResource2.SetActive(false);
-                colResource3.SetActive(false);
+            if (mouse.transform.position != GameObject.Find("ButtonPool (3)").transform.position && mouse.transform.position != GameObject.Find("ButtonR").transform.position && mouse.transform.position != GameObject.Find("ButtonW").transform.position && mouse.transform.position != GameObject.Find("ButtonP").transform.position)
+            {
+                Debug.Log("Count me in");
+                collision = false;
             }
-            else if (select1 && send) {
+            if(!send)
+            {
+                if (colResource1.activeInHierarchy)
+                {
+                    colResource1.transform.position = outScreen.position;
+                }
+                else if (colResource2.activeInHierarchy)
+                {
+                    colResource2.transform.position = outScreen.position;
+                }
+                else if (colResource3.activeInHierarchy)
+                {
+                    colResource3.transform.position = outScreen.position;
+                }
+            }
+            else if ( send && ChooseWindow.getsWindowNumber == 1) {
                 colResource1.transform.position = targetPool.position;
+                //ChooseWindow.drag = false;
+                //ChooseWindow.getsWindowNumber = 0;
             }
-            else if (select2 && send) {
+            else if ( send && ChooseWindow.getsWindowNumber == 2) {
                 colResource2.transform.position = targetPool.position;
+                //ChooseWindow.getsWindowNumber = 0;
             }
-            else if (select3 && send) {
+            else if ( send && ChooseWindow.getsWindowNumber == 3) {
                 colResource3.transform.position = targetPool.position;
+                //ChooseWindow.getsWindowNumber = 0;
             }
         }
     }
@@ -78,8 +93,32 @@ public class Negotiation : MonoBehaviour {
     void OnCollisionEnter(Collision col) { 
         if (col.gameObject.tag == "Pool") {
             send = true;
+            mouse.transform.position = GameObject.Find("ButtonPool (3)").transform.position;
         }
-        else if (col.gameObject.tag == "Collider1") {
+        else if(col.gameObject.tag == "Collider1")
+        {
+            Debug.Log("I am in");
+            ChooseWindow.drag = true;
+            colResource1.SetActive(true);
+            colResource2.SetActive(false);
+            colResource3.SetActive(false);
+            collision = true;
+        }
+        else if (col.gameObject.tag == "Collider2")
+        {
+            ChooseWindow.drag = true;
+            colResource2.SetActive(true);
+            colResource1.SetActive(false);
+            colResource3.SetActive(false);
+        }
+        else if (col.gameObject.tag == "Collider3")
+        {
+            ChooseWindow.drag = true;
+            colResource3.SetActive(true);
+            colResource1.SetActive(false);
+            colResource2.SetActive(false);
+        }
+        /*else if (col.gameObject.tag == "Collider1") {
             select1 = true;
             select2 = false;
             select3 = false;
@@ -99,6 +138,18 @@ public class Negotiation : MonoBehaviour {
             select1 = false;
             send = false;
             colResource3.SetActive(true);
+        }*/
+    }
+
+    void OnCollisionExit(Collision col)
+    {
+        if (col.gameObject.tag == "Pool")
+        {
+            send = false;
+        }
+        else if(col.gameObject.tag == "Collider1")
+        {
+            ChooseWindow.drag = false;
         }
     }
 }
